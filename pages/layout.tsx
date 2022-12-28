@@ -1,10 +1,13 @@
-import Header from '../components/layout/header/Header'
+import {
+  HeaderAuthenticated,
+  HeaderUnauthenticated,
+} from '../components/layout/header/Header'
 import Head from 'next/head'
 
 import { Montserrat } from '@next/font/google'
 const montserrat = Montserrat({ subsets: ['latin'] })
 
-export default function Layout({ title, user, children }) {
+export default function Layout({ title, auth, children }) {
   const htmlTitle = `${title} | BeWater`
 
   return (
@@ -19,7 +22,7 @@ export default function Layout({ title, user, children }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={montserrat.className}>
-        <Header user={user} />
+        {auth ? <HeaderAuthenticated /> : <HeaderUnauthenticated />}
         {children}
       </main>
     </>

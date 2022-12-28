@@ -1,26 +1,19 @@
+import { GetServerSidePropsContext } from 'next'
+import { requireAuthenticated } from '../utils/middleware'
 import Layout from './layout'
-import { Session, unstable_getServerSession } from 'next-auth'
-import authOptions from './api/auth/[...nextauth]'
-import { GetServerSideProps } from 'next'
 
-export default function Home({ user }) {
+export default function Home() {
   return (
-    <Layout title="Home" user={user}>
+    <Layout title="Home" auth={true}>
       ok
     </Layout>
   )
 }
 
-export const getServerSideProps : GetServerSideProps = async (context) => {
-  const session : Session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  )
-
-  return {
-    props: {
-      user: session.user,
-    },
-  }
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  return requireAuthenticated(context, () => {
+    return {
+      props: {},
+    }
+  })
 }
