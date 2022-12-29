@@ -10,5 +10,6 @@
       "username": "bewater",
       "password": "bewater"
     }
-  ]
+  ],
+  "sqltools.useNodeRuntime": true
 }
